@@ -1,4 +1,5 @@
 unsigned long startTime; // Variable to store the start time
+const int sensorPin = A0; // Analog pin for sensor
 
 void setup() {
   Serial.begin(9600); // Initialize serial communication
@@ -13,15 +14,19 @@ void loop() {
   int minutes = (elapsedTime % 3600000) / 60000;
   int seconds = (elapsedTime % 60000) / 1000;
 
-  // Print the elapsed time in HH:MM:SS format
-  Serial.print(hours < 10 ? "0" : "");
+  // Read sensor value from pin A0
+  int sensorValue = analogRead(sensorPin);
+
+  // Send data in CSV format
   Serial.print(hours);
   Serial.print(":");
   Serial.print(minutes < 10 ? "0" : "");
   Serial.print(minutes);
   Serial.print(":");
   Serial.print(seconds < 10 ? "0" : "");
-  Serial.println(seconds);
+  Serial.print(seconds);
+  Serial.print(",");
+  Serial.println(sensorValue);
 
-  delay(1000); // Wait for 1 second
+  delay(1000); // Adjust the delay based on your application
 }
